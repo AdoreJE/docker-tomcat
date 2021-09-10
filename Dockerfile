@@ -50,8 +50,11 @@ ADD ./setenv.sh /usr/local/tomcat/bin
 # Timezone
 RUN cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 RUN apk del tzdata
+RUN mkdir /data/upload
 
 RUN rm -rf /usr/local/tomcat/webapps/*
 ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh", "run"]
 
 EXPOSE 8009
+EXPOSE 9009
+EXPOSE 10009
