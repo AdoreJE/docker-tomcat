@@ -33,17 +33,15 @@
 #EXPOSE 8009
 
 FROM openjdk:8-alpine
-RUN apk add --no-cache curl tzdata
+RUN apk add --no-cache fontconfig ttf-dejavu curl tzdata
 
-RUN curl -SL https://mirror.navercorp.com/apache/tomcat/tomcat-8/v8.5.69/bin/apache-tomcat-8.5.69.tar.gz -o apache-tomcat-8.5.69.tar.gz \
+RUN curl -SL https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.72/bin/apache-tomcat-8.5.72.tar.gz -o apache-tomcat-8.5.72.tar.gz \
   && mkdir -p /src/tomcat/ \
-  && tar xzf apache-tomcat-8.5.69.tar.gz -C src/tomcat --strip-components=1 \
+  && tar xzf apache-tomcat-8.5.72.tar.gz -C src/tomcat --strip-components=1 \
   && cd / \
   && mv /src/tomcat /usr/local \
   && rm -rf src/ \
-  && rm -f apache-tomcat-8.5.69.tar.gz
-
-RUN apk update && apk add --no-cache fontconfig ttf-dejavu
+  && rm -f apache-tomcat-8.5.72.tar.gz
 
 ENV CATALINA_HOME=/usr/local/tomcat
 ENV CATALINA_BASE=/usr/local/tomcat
@@ -52,7 +50,7 @@ ADD ./setenv.sh /usr/local/tomcat/bin
 # Timezone
 RUN cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 RUN apk del tzdata
-RUN mkdir /data/upload
+RUN mkdir -p /data/upload
 
 RUN rm -rf /usr/local/tomcat/webapps/*
 ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh", "run"]
