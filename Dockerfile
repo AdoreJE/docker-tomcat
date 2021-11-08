@@ -43,6 +43,8 @@ RUN curl -SL https://mirror.navercorp.com/apache/tomcat/tomcat-8/v8.5.69/bin/apa
   && rm -rf src/ \
   && rm -f apache-tomcat-8.5.69.tar.gz
 
+RUN apk update && apk add --no-cache fontconfig ttf-dejavu
+
 ENV CATALINA_HOME=/usr/local/tomcat
 ENV CATALINA_BASE=/usr/local/tomcat
 ADD ./setenv.sh /usr/local/tomcat/bin
